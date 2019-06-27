@@ -9,9 +9,11 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace CandidateApplication.Controllers
 {
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class CandidateController : ApiController
     {
         private readonly CandidateService _canidateService;
@@ -28,7 +30,7 @@ namespace CandidateApplication.Controllers
         public IHttpActionResult GetCandidates(CandidateSearchParams candidateSearchParams)
         {
             var candidates = Task.Run(() => _canidateService.GetCandidates(candidateSearchParams)).Result;
-            if (candidates != null && candidates.Count > 0)
+            if (candidates != null)
             {
                 return Ok(candidates);
             }
@@ -36,16 +38,30 @@ namespace CandidateApplication.Controllers
         }
 
         [HttpPost]
-        [Route("api/createCandidates")]
-        public IHttpActionResult SaveCandidates(List<CandidateDTO> candidateDtos)
+        [Route("api/createCandidate")]
+        public IHttpActionResult SaveCandidate(CandidateDTO candidateDto)
         {
-            var candidates = _mapper.ConvertCandidateDtoToDbModel(candidateDtos);
-            var success = Task.Run(() => _canidateService.SaveCandidates(candidates)).Result;
+            var candidate = _mapper.ConvertCandidateDtoToDbModel(candidateDto);
+            var success = Task.Run(() => _canidateService.SaveCandidate(candidate)).Result;
             if (success)
             {
                 return Ok();
             }
             return BadRequest();
+        }
+
+        [HttpPost]
+        [Route("api/createQualification/{id}")]
+        public IHttpActionResult SaveQualification(QualificationDTO qualificationDTO, int id)
+        {
+            var qualification = _mapper.ConvertQualificationDtoToDbModel(qualificationDTO, id);
+            var success = Task.Run(() => _canidateService.SaveQualification(qualification)).Result;
+            if (success)
+            {
+                return Ok();
+            }
+            return BadRequest();
+
         }
     }
 }

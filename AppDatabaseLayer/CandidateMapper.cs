@@ -10,32 +10,46 @@ namespace AppDatabaseLayer
 {
     public class CandidateMapper
     {
-        public List<Candidate> ConvertCandidateDtoToDbModel(List<CandidateDTO> candidateDtos)
+        public Candidate ConvertCandidateDtoToDbModel(CandidateDTO candidateDto)
         {
   
 
-            var candidates = (from candidate in candidateDtos
-                                 select new Candidate()
-                                 {
-                                     FirstName = candidate.FirstName,
-                                     LastName = candidate.LastName,
-                                     Email = candidate.Email,
-                                     ZipCode = candidate.ZipCode,
-                                     ID = candidate.ID,
-                                     PhoneNumber = candidate.PhoneNumber,
-                                     Qualifications = (from qualification in candidate.Qualifications
-                                                       select new Qualification()
-                                                       {
-                                                           DateStarted = qualification.DateStarted,
-                                                           DateCompleted = qualification.DateCompleted,
-                                                           Name = qualification.Name,
-                                                           ID = qualification.ID,
-                                                           Type = qualification.Type,
-                                                           CandidateID = candidate.ID
-                                                       }).ToList()
+    
+            var candidate = new Candidate()
+            {
+                FirstName = candidateDto.FirstName,
+                LastName = candidateDto.LastName,
+                Email = candidateDto.Email,
+                ZipCode = candidateDto.ZipCode,
+                ID = candidateDto.ID,
+                PhoneNumber = candidateDto.PhoneNumber,
+                Qualifications = (from qualification in candidateDto.Qualifications
+                                  select new Qualification()
+                                  {
+                                      DateStarted = qualification.DateStarted,
+                                      DateCompleted = qualification.DateCompleted,
+                                      Name = qualification.Name,
+                                      ID = qualification.ID,
+                                      Type = qualification.Type,
+                                      CandidateID = candidateDto.ID
+                                  }).ToList()
 
-                                 }).ToList();
-            return candidates;
+            };
+            return candidate;
+        }
+
+        public Qualification ConvertQualificationDtoToDbModel(QualificationDTO qualificationDto, int candidateId)
+        {
+            var qualification = new Qualification()
+            {
+                DateStarted = qualificationDto.DateStarted,
+                DateCompleted = qualificationDto.DateCompleted,
+                Name = qualificationDto.Name,
+                ID = qualificationDto.ID,
+                Type = qualificationDto.Type,
+                CandidateID = candidateId
+            };
+            return qualification;
         }
 
     }

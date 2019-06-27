@@ -11,7 +11,8 @@ namespace AppDatabaseLayer.CRUD
     public interface ICandidateRepository
     {
         List<CandidateDTO> GetCandidates(CandidateDbContext context, CandidateSearchParams candidateSearchParams);
-        bool SaveCandidates(CandidateDbContext context, List<Candidate> candidateDTOs);
+        bool SaveCandidates(CandidateDbContext context, Candidate candidate);
+        bool SaveQualification(CandidateDbContext context, Qualification qualification);
 
     }
 }

@@ -11,6 +11,7 @@ namespace AppDatabaseLayer
     public interface ICandidateService
     {
         List<CandidateDTO> GetCandidates(CandidateSearchParams searchParams);
-        bool SaveCandidates(List<Candidate> candidates);
+        bool SaveCandidate(Candidate candidate);
+        bool SaveQualification(Qualification qualification);
     }
 }

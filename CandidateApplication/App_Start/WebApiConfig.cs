@@ -29,6 +29,9 @@ namespace CandidateApplication
 
             var json = config.Formatters.JsonFormatter;
             json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.None;
+            config.EnableCors();
+
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 

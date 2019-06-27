@@ -19,9 +19,7 @@ namespace AppDatabaseLayer.Models
     public class QualificationSearchParams
     {
         public DateTime? Date { get; set; }
-        public bool? IsWorkExperience { get; set; }
-        public bool? IsProfessionalCertification { get; set; }
-        public bool? IsCollegeDegree { get; set; }
+        public string Type { get; set; }
         public List<string> CertificationNames { get; set; }
     }
 
