@@ -15,7 +15,7 @@ namespace AppDatabaseLayer
 
         public CandidateDbContext() : base("CandidateConnectionString")
         {
-            //Database.SetInitializer<CandidateDbContext>(new UniDBInitializer<CandidateDbContext>());
+            Database.SetInitializer<CandidateDbContext>(new UniDBInitializer<CandidateDbContext>());
 
             this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.ProxyCreationEnabled = false;
